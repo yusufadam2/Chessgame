@@ -1,6 +1,5 @@
 package chess;
 
-
 //This class is partially implemented
 public class Board {
 	private static Square [][] board = new Square[8][8];
@@ -17,6 +16,7 @@ public class Board {
 	public static void initialisePieces(){
 
 		//black pieces
+
 		Board.setPiece(0,0,new Rook(PieceColour.BLACK));
 		Board.setPiece(0,1,new Knight(PieceColour.BLACK));		
 		Board.setPiece(0,2,new Bishop(PieceColour.BLACK));		
@@ -53,7 +53,6 @@ public class Board {
 		Board.setPiece(7,7,new Rook(PieceColour.WHITE));
 	}
 	
-	//This method requires your input	
 	public static void printBoard(){
 		System.out.print("\n  a b c d e f g h \n");
 		System.out.print("  -----------------\n");		
@@ -82,16 +81,18 @@ public class Board {
 
 	//This method requires your input
 	public static void setPiece(int iIn, int jIn, Piece p){
+		board[iIn][jIn].setPiece(p);
 	}
 	
 	//This method requires your input
 	public static Piece getPiece(int iIn, int jIn){
-		return new Piece();
+		return board[iIn][jIn].getPiece();
 	}
 	
 	//This method requires your input
-	public static boolean hasPiece(int i, int j){		
-		return false;
+	public static boolean hasPiece(int i, int j)
+	{
+		return board[i][j].hasPiece();
 	}
 
 }
