@@ -6,22 +6,14 @@ public class Square {
 	private Piece p;
 	
 	public boolean hasPiece(){
-
-		if (p== null)
-		{
-			hasPiece= false;
-		}
-
-		else
-		{
-			hasPiece= true;
-		}
+		
 		return hasPiece;
 	}
 
 	public void setPiece(Piece pIn)
 	{
 		p= pIn;
+		hasPiece= true;
 	}
 
 	public Piece getPiece()
@@ -31,7 +23,8 @@ public class Square {
 
 	public void removePiece()
 	{
-		
+		hasPiece= false;
+		p= null;
 	}
 
 }

@@ -76,6 +76,7 @@ public class Board {
 	
 	//This method requires your input	
 	public static boolean movePiece(int i0, int j0, int i1, int j1, Piece p){
+
 		return false;
 	}
 

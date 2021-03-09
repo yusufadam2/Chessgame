@@ -1,7 +1,7 @@
 package chess;
 
 //This class requires your input
-public class Piece {
+public abstract class Piece {
 	private String symbol;
 	protected PieceColour colour;
 
@@ -19,8 +19,6 @@ public class Piece {
 		return colour;
 	}
 
-	public Boolean isLegitMove(int i1, int j1, int i2, int j2)
-	{
-
-	}	
+	public abstract Boolean isLegitMove(int i1, int j1, int i2, int j2);
+	
 }
