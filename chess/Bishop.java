@@ -18,34 +18,17 @@ public class Bishop extends Piece{
 
 	public Boolean isLegitMove(int i1, int j1, int i2, int j2)
 	{
-		boolean isCapturable= false;
 		boolean isFree= false;
-		Piece targetPiece= Board.getPiece(i2,j2);
-
-		//checks if square is free
 		isFree= Board.hasPiece(i2,j2);
 
-		//checks if square is capturable
-		if((targetPiece.getColour()!= colour) && (isFree== false))
+		if (!isFree || Board.getPiece(i2, j2).getColour() != Board.getPiece(i1, j1).getColour()) 
 		{
-			isCapturable= true;
-		}
-		else
-		{
-			isCapturable= false;
-		}
 
-		//cehck for legit move
-		if(isFree || isCapturable)
-		{
-			//pass
-		}
-		else
-		{
-			//not legit move
-			System.out.println("Target square not free or capturable");
-			return false;
-		}
+        }
+        else 
+        {
+            return false;
+        }
 
 		//calc direction 
 		int rowDiff= i2- i1;
@@ -54,7 +37,7 @@ public class Bishop extends Piece{
 		int columnIncrementPerStep;
 
 
-		if(rowDiff == columnDiff && columnDiff > 0)
+		if(rowDiff == -columnDiff && columnDiff > 0)
 			{
 			// up right
 			rowIncrementPerStep= -1;
@@ -67,14 +50,14 @@ public class Bishop extends Piece{
 			columnIncrementPerStep= 1;
 			
 		}
-		else if(rowDiff == columnDiff && columnDiff == 0)
+		else if(rowDiff == -columnDiff && columnDiff <0)
 		{
 			// down left
 			rowIncrementPerStep= 1;
 			columnIncrementPerStep= -1;
 
 		}
-		else if(rowDiff == columnDiff && columnDiff == 0)
+		else if(rowDiff == columnDiff && columnDiff<0)
 		{
 			// up left
 			rowIncrementPerStep= -1;
@@ -84,7 +67,6 @@ public class Bishop extends Piece{
 		else
 		{
 			// not moving diagonally
-			System.out.println("not moving diagnoally");
 			return false;
 		}
 
@@ -98,8 +80,13 @@ public class Bishop extends Piece{
 			}
 			if(Board.hasPiece(currentRow, currentColumn))
 			{
-				System.out.println("pieces in between source and target");
-				return false;
+				if(currentRow == i2 && currentColumn == j2)
+				{
+					break;
+				}
+				else{
+					return false;
+				}
 			}
 
 			currentRow += rowIncrementPerStep;

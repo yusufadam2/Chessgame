@@ -19,35 +19,18 @@ public class Rook extends Piece{
 
 	public Boolean isLegitMove(int i1, int j1, int i2, int j2)
 	{
-		boolean isCapturable= false;
 		boolean isFree= false;
-		Piece targetPiece= Board.getPiece(i2,j2);
-
-		//checks if square is free
 		isFree= Board.hasPiece(i2,j2);
 
-		//checks if square is capturable
-		if((targetPiece.getColour()!= colour) && (isFree== false))
+		if (!isFree || Board.getPiece(i2, j2).getColour() != Board.getPiece(i1, j1).getColour()) 
 		{
-			isCapturable= true;
-		}
-		else
-		{
-			isCapturable= false;
-		}
 
-		//cehck for legit move
-		if(isFree || isCapturable)
-		{
-			//pass
-		}
-		else
-		{
-			//not legit move
-			System.out.println("Target square not free or capturable");
-			return false;
-		}
-		
+        }
+        else 
+        {
+            return false;
+        }
+
 		//calc direction 
 		int rowDiff= i2- i1;
 		int columnDiff= j2-j1;
@@ -78,14 +61,13 @@ public class Rook extends Piece{
 		else if(rowDiff > 0 && columnDiff == 0)
 		{
 			// down
-			rowIncrementPerStep= 1;
+			rowIncrementPerStep= +1;
 			columnIncrementPerStep=0;
 		
 		}
 		else
 		{
 			// not moving diagonally
-			System.out.println("not moving straight");
 			return false;
 		}
 
@@ -99,8 +81,14 @@ public class Rook extends Piece{
 			}
 			if(Board.hasPiece(currentRow, currentColumn))
 			{
-				System.out.println("pieces in between source and target");
-				return false;
+				if(currentRow == i2 && currentColumn == j2)
+				{
+					break;
+				}
+				else{
+					return false;
+				}
+				
 			}
 
 			currentRow += rowIncrementPerStep;

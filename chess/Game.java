@@ -8,59 +8,167 @@ public class Game {
 	public static void play(){
 		int turns = 0;
 		Console keyboardConsole = System.console();
-
+		CheckInput check= new CheckInput();
 		while (!gameEnd)
 		{
 			boolean originCheck= false;
 			boolean destinationCheck= false;
 			boolean colourCheck= false;
-
+			boolean legitCheck= false;
+			int sourceRow=0;
+			int sourceColumn=0;
+			int destRow=0;
+			int destColumn=0;
 			//white move
-			if (turns%2 = 0)
+			if (turns%2 == 0)
 			{
-				System.out.println("- - - - - - Whites move - - - - - -");
-				while(originCheck== false)
+				System.out.println("------ Whites move ------");
+				while(colourCheck== false)
 				{
-					String origin;
-					origin= keyboardConsole.readLine("Enter origin");
-					originCheck= CheckInput.checkCoordinateValidity(origin);	
+					try
+					{
+						String origin;
+						origin= keyboardConsole.readLine("Enter origin: ");
+						originCheck= check.checkCoordinateValidity(origin);
+
+						if(originCheck== true)
+						{
+							sourceRow= Character.getNumericValue(origin.charAt(0))-1;
+							sourceColumn= "abcdefgh".indexOf(origin.charAt(1));
+
+							//check for white
+							if(Board.getPiece(sourceRow,sourceColumn).getColour()==PieceColour.WHITE)
+							{
+								colourCheck= true;
+							}
+							else if(Board.getPiece(sourceRow,sourceColumn).getColour()==PieceColour.BLACK)
+							{
+								colourCheck= false;
+								System.out.println("Piece is not white");
+							}
+						}
+					}
+					catch(Exception e)
+					{
+						System.out.println("No piece on square");
+						continue;
+					}
+
 				}
 				
-				while(destinationCheck== false)
+				while(legitCheck== false)
 				{
 					String destination;
-					destination= keyboardConsole.readLine("Enter destination:");
-					destinationCheck= CheckInput.checkCoordinateValidity(destination);
+					destination= keyboardConsole.readLine("Enter destination: ");
+					destinationCheck= check.checkCoordinateValidity(destination);
+
+					if(destinationCheck== true)
+					{
+						destRow= Character.getNumericValue(destination.charAt(0))-1;
+						destColumn= "abcdefgh".indexOf(destination.charAt(1));
+
+						if(Board.getPiece(sourceRow,sourceColumn).isLegitMove(sourceRow,sourceColumn,destRow,destColumn))
+						{
+							legitCheck= true;
+						}
+
+					}
 				}
-				turns= turns +1;
+				if(legitCheck && colourCheck)
+				{
+					if(Board.movePiece(sourceRow,sourceColumn,destRow,destColumn,Board.getPiece(sourceRow,sourceColumn)))
+					{
+						gameEnd=true;
+						System.out.println("White wins!");
+					}
+					else
+					{
+						Board.printBoard();
+						turns= turns+1;
+					}
+				}
+
+
 			}
 
 			//black move
-			else if (turns%2=1)
+			else if (turns%2 ==1)
 			{
-				System.out.println("- - - - - - Blacks move - - - - - -");
-				while(originCheck== false)
+				System.out.println("------ Blacks move ------");
+				while(colourCheck== false)
 				{
-					String origin;
-					origin= keyboardConsole.readLine("Enter origin");
-					originCheck= CheckInput.checkCoordinateValidity(origin);	
+					try
+					{
+						String origin;
+						origin= keyboardConsole.readLine("Enter origin: ");
+						originCheck= check.checkCoordinateValidity(origin);
+
+						if(originCheck== true)
+						{
+							sourceRow= Character.getNumericValue(origin.charAt(0))-1;
+							sourceColumn= "abcdefgh".indexOf(origin.charAt(1));
+
+							//check for white
+							if(Board.getPiece(sourceRow,sourceColumn).getColour()==PieceColour.BLACK)
+							{
+								colourCheck= true;
+							}
+							else if(Board.getPiece(sourceRow,sourceColumn).getColour()==PieceColour.WHITE)
+							{
+								colourCheck= false;
+								System.out.println("Piece is not black");
+							}
+						}
+					}
+					catch(Exception e)
+					{
+						System.out.println("No piece on square");
+						continue;
+					}
+
 				}
 				
-				while(destinationCheck== false)
+				while(legitCheck== false)
 				{
 					String destination;
-					destination= keyboardConsole.readLine("Enter destination:");
-					destinationCheck= CheckInput.checkCoordinateValidity(destination);
+					destination= keyboardConsole.readLine("Enter destination: ");
+					destinationCheck= check.checkCoordinateValidity(destination);
+
+					if(destinationCheck== true)
+					{
+						destRow= Character.getNumericValue(destination.charAt(0))-1;
+						destColumn= "abcdefgh".indexOf(destination.charAt(1));
+
+						if(Board.getPiece(sourceRow,sourceColumn).isLegitMove(sourceRow,sourceColumn,destRow,destColumn))
+						{
+							legitCheck= true;
+						}
+
+					}
+				}
+				if(legitCheck && colourCheck)
+				{
+					if(Board.movePiece(sourceRow,sourceColumn,destRow,destColumn,Board.getPiece(sourceRow,sourceColumn)))
+					{
+						gameEnd=true;
+						System.out.println("Black wins!");
+					}
+					else
+					{
+						Board.printBoard();
+						turns= turns+1;
+					}
 				}
 			}
-			turns= turns+1;
-		}		
-	}
+		}
+	}		
 	
 	//This method should not be edited
 	public static void main (String args[]){
 		Board.initialiseBoard();
 		Board.initialisePieces();
 		Board.printBoard();
-		Game.play();	}
+		Game.play();	
+	}
+
 }

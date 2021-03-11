@@ -1,6 +1,7 @@
 package chess;
 
-public class Pawn extends Piece{
+public class Pawn extends Piece
+{
 
 	public Pawn(PieceColour p)
 	{
@@ -25,18 +26,8 @@ public class Pawn extends Piece{
 		//checks if square is free
 		isFree= Board.hasPiece(i2,j2);
 
-		//checks if square is capturable
-		if((targetPiece.getColour()!= colour) && (isFree== false))
-		{
-			isCapturable= true;
-		}
-		else
-		{
-			isCapturable= false;
-		}
-
 		//cehck for legit move
-		if(isFree)
+		if(!isFree)
 		{
 			if( j1 == j2)
 			{
@@ -44,7 +35,7 @@ public class Pawn extends Piece{
 				if(colour == PieceColour.WHITE)
 				{
 					// white
-					if( i1-1 == i2)
+					if((i1-1 == i2) || (i1==6 && i1-2==i2))
 					{
 						// move one up
 						return true;
@@ -58,7 +49,7 @@ public class Pawn extends Piece{
 				else
 				{
 					// black
-					if( i1+1 == i2)
+					if((i1+1 == i2) || (i1==1 && i1+2==i2))
 					{
 						// move one down
 						return true;
@@ -76,8 +67,10 @@ public class Pawn extends Piece{
 				System.out.println("not staying in same column");
 				return false;
 			}
+
+
 		}
-		else if(isCapturable)
+		else if(Board.getPiece(i2, j2).getColour() != Board.getPiece(i1, j1).getColour())
 		{
 			if( j1+1 == j2 || j1-1 == j2)
 			{

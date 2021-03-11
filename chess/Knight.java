@@ -18,34 +18,17 @@ public class Knight extends Piece{
 
 	public Boolean isLegitMove(int i1, int j1, int i2, int j2)
 	{
-		boolean isCapturable= false;
 		boolean isFree= false;
-		Piece targetPiece= Board.getPiece(i2,j2);
-
-		//checks if square is free
 		isFree= Board.hasPiece(i2,j2);
 
-		//checks if square is capturable
-		if((targetPiece.getColour()!= colour) && (isFree== false))
+		if (!isFree || Board.getPiece(i2, j2).getColour() != Board.getPiece(i1, j1).getColour()) 
 		{
-			isCapturable= true;
-		}
-		else
-		{
-			isCapturable= false;
-		}
 
-		//cehck for legit move
-		if(isFree || isCapturable)
-		{
-			//pass
-		}
-		else
-		{
-			//not legit move
-			System.out.println("Target square not free or capturable");
-			return false;
-		}
+        }
+        else 
+        {
+            return false;
+        }
 
 		if( i1+2 == i2 && j1+1 == j2)
 		{
