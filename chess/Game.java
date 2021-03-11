@@ -23,15 +23,24 @@ public class Game {
 			if (turns%2 == 0)
 			{
 				System.out.println("------ Whites move ------");
-				while(colourCheck== false)
+				while(colourCheck== false && !gameEnd)
 				{
 					try
 					{
 						String origin;
 						origin= keyboardConsole.readLine("Enter origin: ");
-						originCheck= check.checkCoordinateValidity(origin);
+						
+						if(origin.equals("END"))
+						{
+							gameEnd= true;
+						}
+						else
+						{
+							originCheck= check.checkCoordinateValidity(origin);
+						}
+						
 
-						if(originCheck== true)
+						if(originCheck== true && !gameEnd)
 						{
 							sourceRow= Character.getNumericValue(origin.charAt(0))-1;
 							sourceColumn= "abcdefgh".indexOf(origin.charAt(1));
@@ -56,13 +65,20 @@ public class Game {
 
 				}
 				
-				while(legitCheck== false)
+				while(legitCheck== false && !gameEnd)
 				{
 					String destination;
 					destination= keyboardConsole.readLine("Enter destination: ");
-					destinationCheck= check.checkCoordinateValidity(destination);
+					if(destination.equals("END"))
+					{
+						gameEnd= true;
+					}
+					else
+					{
+						destinationCheck= check.checkCoordinateValidity(destination);
+					}
 
-					if(destinationCheck== true)
+					if(destinationCheck== true && !gameEnd)
 					{
 						destRow= Character.getNumericValue(destination.charAt(0))-1;
 						destColumn= "abcdefgh".indexOf(destination.charAt(1));
@@ -74,7 +90,7 @@ public class Game {
 
 					}
 				}
-				if(legitCheck && colourCheck)
+				if(legitCheck && colourCheck && !gameEnd)
 				{
 					if(Board.movePiece(sourceRow,sourceColumn,destRow,destColumn,Board.getPiece(sourceRow,sourceColumn)))
 					{
@@ -95,15 +111,22 @@ public class Game {
 			else if (turns%2 ==1)
 			{
 				System.out.println("------ Blacks move ------");
-				while(colourCheck== false)
+				while(colourCheck== false && !gameEnd)
 				{
 					try
 					{
 						String origin;
 						origin= keyboardConsole.readLine("Enter origin: ");
-						originCheck= check.checkCoordinateValidity(origin);
+						if(origin.equals("END"))
+						{
+							gameEnd= true;
+						}
+						else
+						{
+							originCheck= check.checkCoordinateValidity(origin);
+						}
 
-						if(originCheck== true)
+						if(originCheck== true && !gameEnd)
 						{
 							sourceRow= Character.getNumericValue(origin.charAt(0))-1;
 							sourceColumn= "abcdefgh".indexOf(origin.charAt(1));
@@ -128,13 +151,21 @@ public class Game {
 
 				}
 				
-				while(legitCheck== false)
+				while(legitCheck== false && !gameEnd)
 				{
 					String destination;
 					destination= keyboardConsole.readLine("Enter destination: ");
-					destinationCheck= check.checkCoordinateValidity(destination);
+					
+					if(destination.equals("END"))
+					{
+						gameEnd= true;
+					}
+					else
+					{
+						destinationCheck= check.checkCoordinateValidity(destination);
+					}
 
-					if(destinationCheck== true)
+					if(destinationCheck== true && !gameEnd)
 					{
 						destRow= Character.getNumericValue(destination.charAt(0))-1;
 						destColumn= "abcdefgh".indexOf(destination.charAt(1));
@@ -146,7 +177,7 @@ public class Game {
 
 					}
 				}
-				if(legitCheck && colourCheck)
+				if(legitCheck && colourCheck && !gameEnd)
 				{
 					if(Board.movePiece(sourceRow,sourceColumn,destRow,destColumn,Board.getPiece(sourceRow,sourceColumn)))
 					{
