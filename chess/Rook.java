@@ -17,6 +17,7 @@ public class Rook extends Piece{
 		}
 	}
 
+	@Override
 	public Boolean isLegitMove(int i1, int j1, int i2, int j2)
 	{
 		boolean isFree= false;
